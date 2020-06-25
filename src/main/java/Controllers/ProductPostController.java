@@ -68,7 +68,7 @@ public class ProductPostController {
                     String data = "Product not found";
 
                     response.setData(data);
-                    response.setStatusCode(204);
+                    response.setStatusCode(201);
 
                 }
 
