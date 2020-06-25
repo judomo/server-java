@@ -69,7 +69,7 @@ public class ProductPutController {
                     product.addProperty("id", result);
 
                     response.setData(product);
-                    response.setStatusCode(200);
+                    response.setStatusCode(204);
                 }
             }
 
@@ -85,12 +85,8 @@ public class ProductPutController {
             httpExchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Expose-Headers, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Methods, Authorization");
 
 
-            httpExchange.sendResponseHeaders(response.getStatusCode(), response.getData().toString().length());
+            httpExchange.sendResponseHeaders(response.getStatusCode(), -1);
 
-            OutputStream os = httpExchange.getResponseBody();
-
-            os.write(response.getData().toString().getBytes());
-            os.close();
 
             daoProduct.close();
 
