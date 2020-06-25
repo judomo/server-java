@@ -1,46 +1,33 @@
 package Controllers;
 
+import DAO.DaoGroup;
 import DAO.DaoProduct;
+import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
+import dto.Group;
 import dto.Product;
 import dto.Response;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import utils.HttpUtil;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.Map;
 
-public class ProductsSearchController{
+public class GroupGetAllController{
 
+    public static void getAllGroups(HttpExchange httpExchange) throws IOException {
 
-    public static void getAllProducts(HttpExchange httpExchange) throws IOException {
-
-        DaoProduct daoProduct = new DaoProduct("storedb");
-
-        URI requestUri = httpExchange.getRequestURI();
-
-        Map<String, Object> searchParams = HttpUtil.parseQuery(requestUri.getRawQuery());
-
-        String queryString = String
-                .valueOf((String) searchParams.get("query"));
-
+        DaoGroup daoGroup = new DaoGroup();
 
         JSONObject products_json = new JSONObject();
 
         Response response = new Response();
 
-        System.out.println("Started");
 
+        ArrayList<Group> groups = daoGroup.getAllPGroups();
 
-        ArrayList<Product> products = daoProduct.searchProducts(queryString);
-
-        System.out.println(products);
-
-        if (products == null) {
+        if (groups == null) {
 
             String data = "Product not found";
 
@@ -56,26 +43,19 @@ public class ProductsSearchController{
             JSONArray products_arr = new JSONArray();
 
 
-            for (int i = 0; i < products.size(); i++) {
+            for (int i = 0; i < groups.size(); i++) {
 
                 JSONObject tmp = new JSONObject();
 
-                tmp.put("product_id", products.get(i).getId());
-                tmp.put("product_name", products.get(i).getName());
-                tmp.put("product_descr", products.get(i).getDescr());
-                tmp.put("product_manuf", products.get(i).getManufacturer());
-                tmp.put("product_price", products.get(i).getPrice());
-                tmp.put("product_amount", products.get(i).getAmount());
-
-                tmp.put("product_group_id", products.get(i).getGroup_id());
-
-                tmp.put("product_group_name", products.get(i).getGroup_name());
+                tmp.put("group_id", groups.get(i).getId());
+                tmp.put("group_name", groups.get(i).getGroup_name());
+                tmp.put("group_descr", groups.get(i).getGroup_description());
 
                 products_arr.add(tmp);
 
             }
 
-            products_json.put("products", products_arr);
+            products_json.put("groups", products_arr);
 
 
             response.setData(products_json);
@@ -95,9 +75,6 @@ public class ProductsSearchController{
         httpExchange.getResponseHeaders().set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
         httpExchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Expose-Headers, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Methods, Authorization");
 
-
-
-
         httpExchange.sendResponseHeaders(response.getStatusCode(), response.getData().toString().length());
 
         OutputStream os = httpExchange.getResponseBody();
@@ -106,7 +83,7 @@ public class ProductsSearchController{
 
         os.close();
 
-        daoProduct.close();
+        daoGroup.close();
 
     }
 

@@ -203,8 +203,6 @@ public class DaoProduct {
 
             }
 
-
-
             return null;
 
         } catch (final SQLException e) {

@@ -72,8 +72,10 @@ public class UserAuthController {
 
         httpExchange.getResponseHeaders().set("Content-Type", "appication/json");
         httpExchange.getResponseHeaders().set("Access-Control-Allow-Credentials", "true");
-        httpExchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+        httpExchange.getResponseHeaders().set("Access-Control-Allow-Origin", "http://localhost:3000");
         httpExchange.getResponseHeaders().set("Access-Control-Expose-Headers", "Set-Cookie");
+        httpExchange.getResponseHeaders().set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
+        httpExchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Expose-Headers, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Methods, Authorization");
 
         httpExchange.sendResponseHeaders(response.getStatusCode(), response.getData().toString().length());
 

@@ -59,6 +59,9 @@ public class HttpRouter {
         server
                 .createContext("/api/group/getOne", GroupGetController::getProductsGroupById).setAuthenticator(new MyAuthenticator());
 
+        server
+                .createContext("/api/group/getAll", GroupGetAllController::getAllGroups).setAuthenticator(new MyAuthenticator());
+
 
 
 

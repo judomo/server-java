@@ -206,6 +206,42 @@ public class DaoGroup{
 
     }
 
+    public ArrayList<Group> getAllPGroups() {
+
+        try (final PreparedStatement insertStatement = connection.prepareStatement("SELECT * FROM product_group")) {
+
+
+            final ResultSet resultSet = insertStatement.executeQuery();
+
+            ArrayList<Group> groups = new ArrayList<>();
+
+            if(resultSet.next()){
+
+                groups.add(new Group(resultSet.getInt(1),resultSet.getString(2),resultSet.getString(3)));
+
+
+                while (resultSet.next()) {
+
+                    groups.add(new Group(resultSet.getInt(1),resultSet.getString(2),resultSet.getString(3)));
+
+                }
+
+                return groups;
+
+            }
+
+
+
+            return null;
+
+        } catch (final SQLException e) {
+
+            throw new RuntimeException("Can't get all users");
+        }
+
+    }
+
+
     public static void printResultSet(String resultSetName, ResultSet resultSet) {
         System.out.println(resultSetName + ":");
         try {
