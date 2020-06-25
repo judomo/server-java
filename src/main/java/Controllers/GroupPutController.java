@@ -40,7 +40,7 @@ public class GroupPutController{
 
             Response response = new Response();
 
-            if ((postRequestParameters.get("productGroupName").toString().length()) <= 0 || postRequestParameters.get("productGroupDescr").toString().length() == 0 ||  !httpExchange.getRequestMethod().toLowerCase().equals("put")) {
+            if ((postRequestParameters.get("productGroupName").toString().length()) <= 0 || postRequestParameters.get("productGroupDescr").toString().length() == 0 ||  !httpExchange.getRequestMethod().toLowerCase().equals("post")) {
 
                 String data = "Conflict";
 

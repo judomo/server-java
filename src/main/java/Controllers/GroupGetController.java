@@ -1,9 +1,7 @@
 package Controllers;
 
 import DAO.DaoGroup;
-import DAO.DaoProduct;
 import com.sun.net.httpserver.HttpExchange;
-import dto.Product;
 import dto.ProductsGroup;
 import dto.Response;
 import org.json.simple.JSONArray;
@@ -99,7 +97,6 @@ public class GroupGetController{
         httpExchange.getResponseHeaders().set("Access-Control-Expose-Headers", "Set-Cookie");
         httpExchange.getResponseHeaders().set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
         httpExchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Expose-Headers, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Methods, Authorization");
-
 
         httpExchange.sendResponseHeaders(response.getStatusCode(), response.getData().toString().length());
 

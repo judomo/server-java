@@ -47,7 +47,7 @@ public class ProductPutController {
 
             Response response = new Response();
 
-            if (Double.parseDouble(postRequestParameters.get("productPrice").toString()) <= 0 || postRequestParameters.get("productName").toString().length() == 0 || postRequestParameters.get("productDescr").toString().length() == 0 ||postRequestParameters.get("productDescr").toString().length() == 0 ||postRequestParameters.get("productManufacturer").toString().length() == 0 || Integer.parseInt(postRequestParameters.get("productAmount").toString()) <= 0 || Integer.parseInt(postRequestParameters.get("productGroupId").toString()) <= 0 || !httpExchange.getRequestMethod().toLowerCase().equals("put")) {
+            if (Double.parseDouble(postRequestParameters.get("productPrice").toString()) <= 0 || postRequestParameters.get("productName").toString().length() == 0 || postRequestParameters.get("productDescr").toString().length() == 0 ||postRequestParameters.get("productDescr").toString().length() == 0 ||postRequestParameters.get("productManufacturer").toString().length() == 0 || Integer.parseInt(postRequestParameters.get("productAmount").toString()) <= 0 || Integer.parseInt(postRequestParameters.get("productGroupId").toString()) <= 0 || !httpExchange.getRequestMethod().toLowerCase().equals("post")) {
 
                 String data = "Conflict";
 
