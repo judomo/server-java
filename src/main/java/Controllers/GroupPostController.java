@@ -10,6 +10,7 @@ import utils.HttpUtil;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.Map;
 
 public class GroupPostController{
@@ -61,7 +62,6 @@ public class GroupPostController{
 
                 } else if (result == null) {
 
-
                     String data = "Product group not found";
 
                     response.setData(data);
@@ -69,12 +69,16 @@ public class GroupPostController{
 
                 } else {
 
-                    response.setStatusCode(204);
+                    String data = "All done";
+
+                    response.setData(data);
+
+                    response.setStatusCode(201);
 
                 }
             }
 
-            response.setText("product-group-update");
+            response.setText("good-insert");
 
             response.setHttpExchange(httpExchange);
 
@@ -86,7 +90,12 @@ public class GroupPostController{
             httpExchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Expose-Headers, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Methods, Authorization");
 
 
-            httpExchange.sendResponseHeaders(response.getStatusCode(), -1);
+            httpExchange.sendResponseHeaders(response.getStatusCode(), response.getData().toString().length());
+
+            OutputStream os = httpExchange.getResponseBody();
+
+            os.write(response.getData().toString().getBytes());
+            os.close();
 
             daoGroup.close();
 

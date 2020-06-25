@@ -34,7 +34,6 @@ public class HttpRouter {
         server
                 .createContext("/api/good/getStats", ProductGetStat::getAllStats).setAuthenticator(new MyAuthenticator());
 
-
         server
                 .createContext("/api/good/getAll", ProductGetAllController::getAllProducts).setAuthenticator(new MyAuthenticator());
 

@@ -238,7 +238,7 @@ public class DaoProduct {
 
     public ArrayList<Product> searchProducts(String squery) {
 
-        try (final PreparedStatement insertStatement = connection.prepareStatement("SELECT * FROM product t INNER JOIN product_group ON t.group_id = product_group.id WHERE product_name LIKE ?  OR descr LIKE ? OR manufacturer LIKE ? ")) {
+        try (final PreparedStatement insertStatement = connection.prepareStatement("SELECT * FROM product t INNER JOIN product_group ON t.group_id = product_group.id WHERE product_name LIKE ?  OR descr LIKE ? OR manufacturer LIKE ? OR group_name LIKE ? OR group_description LIKE ?")) {
 
             insertStatement.setString(1, StringUtils.defaultIfBlank(squery, "") + "%");
             insertStatement.setString(2, StringUtils.defaultIfBlank(squery, "") + "%");
