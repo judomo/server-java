@@ -47,7 +47,7 @@ public class ProductPutController {
 
             Response response = new Response();
 
-            if (Double.parseDouble(postRequestParameters.get("productPrice").toString()) <= 0 || postRequestParameters.get("productName").toString().length() == 0 || postRequestParameters.get("productDescr").toString().length() == 0 ||postRequestParameters.get("productManufacturer").toString().length() == 0 || Integer.parseInt(postRequestParameters.get("productAmount").toString()) <= 0 || Integer.parseInt(postRequestParameters.get("productGroupId").toString()) <= 0 || !httpExchange.getRequestMethod().toLowerCase().equals("get")) {
+            if (Double.parseDouble(postRequestParameters.get("productPrice").toString()) <= 0 || postRequestParameters.get("productName").toString().length() == 0 || postRequestParameters.get("productDescr").toString().length() == 0 ||postRequestParameters.get("productDescr").toString().length() == 0 ||postRequestParameters.get("productManufacturer").toString().length() == 0 || Integer.parseInt(postRequestParameters.get("productAmount").toString()) <= 0 || Integer.parseInt(postRequestParameters.get("productGroupId").toString()) <= 0 || !httpExchange.getRequestMethod().toLowerCase().equals("put")) {
 
                 String data = "Conflict";
 
@@ -69,7 +69,7 @@ public class ProductPutController {
                     product.addProperty("id", result);
 
                     response.setData(product);
-                    response.setStatusCode(204);
+                    response.setStatusCode(201);
                 }
             }
 
@@ -85,8 +85,12 @@ public class ProductPutController {
             httpExchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Expose-Headers, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Methods, Authorization");
 
 
-            httpExchange.sendResponseHeaders(response.getStatusCode(), -1);
+            httpExchange.sendResponseHeaders(response.getStatusCode(), response.getData().toString().length());
 
+            OutputStream os = httpExchange.getResponseBody();
+
+            os.write(response.getData().toString().getBytes());
+            os.close();
 
             daoProduct.close();
 
