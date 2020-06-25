@@ -6,6 +6,8 @@
 //
 //import sun.misc.*;
 //
+//import java.util.Base64;
+//
 //public class MyCipher{
 //
 //
@@ -33,7 +35,7 @@
 //            cipher.init(Cipher.ENCRYPT_MODE, keyspec, ivspec);
 //            byte[] encrypted = cipher.doFinal(plaintext);
 //
-//            return new sun.misc.BASE64Encoder().encode(encrypted);
+//            return new java.util.Base64().encode(encrypted);
 //
 //        } catch (Exception e) {
 //            e.printStackTrace();
@@ -43,14 +45,16 @@
 //
 //    public static String desEncrypt() throws Exception {
 //        String encrypted = encrypt() ;
+//
+//
 //        try
 //        {
-//            String data = encrypted ;
+//            String data = "aK7+UX24ttBgfTnAndz9aQ==" ;
 //            String key = "1234567812345678";
 //            String iv = "1234567812345678";
 //
-//            byte[] encrypted1 = new BASE64Decoder().decodeBuffer(data);
-//
+//            Base64.Decoder decoder = Base64.getDecoder();
+//            byte[] encrypted1 = decoder.decode(data);
 //
 //            Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding");
 //            SecretKeySpec keyspec = new SecretKeySpec(key.getBytes(), "AES");
@@ -60,7 +64,10 @@
 //
 //            byte[] original = cipher.doFinal(encrypted1);
 //            String originalString = new String(original);
-//            return originalString;
+//            System.out.println(originalString.trim());
+//
+//            return originalString.trim();
+//
 //        }
 //        catch (Exception e) {
 //            e.printStackTrace();
