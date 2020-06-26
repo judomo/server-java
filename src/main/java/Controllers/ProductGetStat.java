@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
 import dto.Product;
 import dto.Response;
+import lombok.SneakyThrows;
+import utils.MyCipher;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -15,6 +17,7 @@ public class ProductGetStat{
 
 
 
+    @SneakyThrows
     public static void getAllStats(HttpExchange httpExchange) throws IOException {
 
         DaoProduct daoProduct = new DaoProduct("storedb");
@@ -28,7 +31,7 @@ public class ProductGetStat{
             String data = "Conflict";
 
             response.setStatusCode(409);
-            response.setData(data);
+            response.setData(MyCipher.encrypt(data));
 
         } else {
 
@@ -40,7 +43,7 @@ public class ProductGetStat{
 
                 response.setStatusCode(404);
 
-                response.setData(data);
+                response.setData(MyCipher.encrypt(data));
 
             } else {
 
@@ -52,7 +55,7 @@ public class ProductGetStat{
 
                 product_json.addProperty("product_amount", stats.get(2));
 
-                response.setData(product_json);
+                response.setData(MyCipher.encrypt(product_json.toString()));
 
                 System.out.println(product_json.toString());
 
