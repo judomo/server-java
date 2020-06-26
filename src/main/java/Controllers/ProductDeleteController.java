@@ -36,6 +36,8 @@ public class ProductDeleteController {
 
         else {
 
+            System.out.println("ProductId" + productId);
+
             Integer res = daoProduct.delete(productId);
 
             if (res == null) {

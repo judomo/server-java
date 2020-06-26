@@ -4,9 +4,11 @@ import DAO.DaoProduct;
 import com.sun.net.httpserver.HttpExchange;
 import dto.Product;
 import dto.Response;
+import lombok.SneakyThrows;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import utils.HttpUtil;
+import utils.MyCipher;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -17,6 +19,7 @@ import java.util.Map;
 public class ProductsSearchController{
 
 
+    @SneakyThrows
     public static void getAllProducts(HttpExchange httpExchange) throws IOException {
 
         DaoProduct daoProduct = new DaoProduct("storedb");
@@ -46,7 +49,9 @@ public class ProductsSearchController{
 
             response.setStatusCode(404);
 
-            response.setData(data);
+            response.setData((MyCipher.encrypt(data)));
+
+
 
         } else {
 
@@ -78,7 +83,7 @@ public class ProductsSearchController{
             products_json.put("products", products_arr);
 
 
-            response.setData(products_json);
+            response.setData((MyCipher.encrypt(products_json.toString())));
 
             System.out.println(products_json.toString());
 

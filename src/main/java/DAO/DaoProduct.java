@@ -225,6 +225,7 @@ public class DaoProduct {
             preparedStatement.executeUpdate();
 
             System.out.println("Deleted " + product_id);
+
             System.out.println();
 
             return 1;

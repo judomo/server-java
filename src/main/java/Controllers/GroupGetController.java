@@ -4,8 +4,10 @@ import DAO.DaoGroup;
 import com.sun.net.httpserver.HttpExchange;
 import dto.ProductsGroup;
 import dto.Response;
+import lombok.SneakyThrows;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import utils.MyCipher;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -13,6 +15,7 @@ import java.net.URI;
 
 public class GroupGetController{
 
+    @SneakyThrows
     public static void getProductsGroupById(HttpExchange httpExchange) throws IOException {
 
         DaoGroup daoGroup = new DaoGroup();
@@ -45,7 +48,7 @@ public class GroupGetController{
 
                 response.setStatusCode(404);
 
-                response.setData(data);
+                response.setData(MyCipher.encrypt(product_json.toString()));
 
             } else {
 
@@ -76,7 +79,7 @@ public class GroupGetController{
 
                 product_json.put("products", list);
 
-                response.setData(product_json);
+                response.setData(MyCipher.encrypt(product_json.toString()));
 
                 System.out.println(product_json.toString());
 

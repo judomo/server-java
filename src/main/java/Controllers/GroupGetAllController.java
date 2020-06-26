@@ -7,8 +7,10 @@ import com.sun.net.httpserver.HttpExchange;
 import dto.Group;
 import dto.Product;
 import dto.Response;
+import lombok.SneakyThrows;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import utils.MyCipher;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 
 public class GroupGetAllController{
 
+    @SneakyThrows
     public static void getAllGroups(HttpExchange httpExchange) throws IOException {
 
         DaoGroup daoGroup = new DaoGroup();
@@ -33,7 +36,7 @@ public class GroupGetAllController{
 
             response.setStatusCode(404);
 
-            response.setData(data);
+            response.setData(MyCipher.encrypt(data));
 
         } else {
 
@@ -58,9 +61,9 @@ public class GroupGetAllController{
             products_json.put("groups", products_arr);
 
 
-            response.setData(products_json);
+            response.setData(MyCipher.encrypt(products_json.toString()));
 
-            System.out.println(products_json.toString());
+            System.out.println(products_json);
 
         }
 
@@ -74,6 +77,7 @@ public class GroupGetAllController{
         httpExchange.getResponseHeaders().set("Access-Control-Expose-Headers", "Set-Cookie");
         httpExchange.getResponseHeaders().set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
         httpExchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Expose-Headers, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Methods, Authorization");
+
 
         httpExchange.sendResponseHeaders(response.getStatusCode(), response.getData().toString().length());
 

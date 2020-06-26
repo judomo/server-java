@@ -10,13 +10,17 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 import java.util.ArrayList;
+
+import lombok.SneakyThrows;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import utils.MyCipher;
 
 
 public class ProductGetAllController{
 
 
+    @SneakyThrows
     public static void getAllProducts(HttpExchange httpExchange) throws IOException {
 
         DaoProduct daoProduct = new DaoProduct("storedb");
@@ -67,8 +71,7 @@ public class ProductGetAllController{
 
                 products_json.put("products", products_arr);
 
-
-                response.setData(products_json);
+                response.setData(MyCipher.encrypt(products_json.toString()));
 
                 System.out.println(products_json.toString());
 
@@ -84,6 +87,7 @@ public class ProductGetAllController{
         httpExchange.getResponseHeaders().set("Access-Control-Expose-Headers", "Set-Cookie");
         httpExchange.getResponseHeaders().set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
         httpExchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Expose-Headers, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Methods, Authorization");
+
 
         httpExchange.sendResponseHeaders(response.getStatusCode(), response.getData().toString().length());
 
