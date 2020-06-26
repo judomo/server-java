@@ -35,82 +35,83 @@ public class ProductGetController {
         try {
             System.out.println(MyCipher.encrypt("Kak"));
             System.out.println(MyCipher.desEncrypt(MyCipher.encrypt("Kak")));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
 
-        Response response = new Response();
+            Response response = new Response();
 
-        if ((!httpExchange.getRequestMethod().toLowerCase().equals("get")) || productId < 0) {
+            if ((!httpExchange.getRequestMethod().toLowerCase().equals("get")) || productId < 0) {
 
-            String data = "Conflict";
+                String data = "Conflict";
 
-            response.setStatusCode(409);
-            response.setData(data);
-
-        } else {
-
-            Product product = daoProduct.getById(productId);
-
-            if (product == null) {
-
-                String data = "Product not found";
-
-                response.setStatusCode(404);
-
+                response.setStatusCode(409);
                 response.setData(data);
 
             } else {
 
-                response.setStatusCode(200);
+                Product product = daoProduct.getById(productId);
 
-                product_json.addProperty("id", product.getId());
+                if (product == null) {
 
-                product_json.addProperty("product_name", product.getName());
+                    String data = "Product not found";
 
-                product_json.addProperty("product_price", product.getPrice());
+                    response.setStatusCode(404);
 
-                product_json.addProperty("product_descr", product.getDescr());
+                    response.setData(data);
 
-                product_json.addProperty("product_manufacturer", product.getManufacturer());
+                } else {
 
-                product_json.addProperty("product_amount", product.getAmount());
+                    response.setStatusCode(200);
 
-                product_json.addProperty("product_group_id", product.getGroup_id());
+                    product_json.addProperty("id", product.getId());
 
-                product_json.addProperty("product_group_name", product.getGroup_name());
+                    product_json.addProperty("product_name", product.getName());
+
+                    product_json.addProperty("product_price", product.getPrice());
+
+                    product_json.addProperty("product_descr", product.getDescr());
+
+                    product_json.addProperty("product_manufacturer", product.getManufacturer());
+
+                    product_json.addProperty("product_amount", product.getAmount());
+
+                    product_json.addProperty("product_group_id", product.getGroup_id());
+
+                    product_json.addProperty("product_group_name", product.getGroup_name());
 
 
+                    response.setData(product_json);
 
-                response.setData(product_json);
+                    System.out.println(product_json.toString());
 
-                System.out.println(product_json.toString());
+                }
 
             }
 
+            response.setText("good-get");
+
+            response.setHttpExchange(httpExchange);
+
+            httpExchange.getResponseHeaders().set("Content-Type", "appication/json");
+            httpExchange.getResponseHeaders().set("Access-Control-Allow-Credentials", "true");
+            httpExchange.getResponseHeaders().set("Access-Control-Allow-Origin", "http://localhost:3000");
+            httpExchange.getResponseHeaders().set("Access-Control-Expose-Headers", "Set-Cookie");
+            httpExchange.getResponseHeaders().set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
+            httpExchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Expose-Headers, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Methods, Authorization");
+
+            httpExchange.sendResponseHeaders(response.getStatusCode(), response.getData().toString().length());
+
+            OutputStream os = httpExchange.getResponseBody();
+
+            os.write(response.getData().toString().getBytes());
+
+            os.close();
+
+            daoProduct.close();
+
         }
-
-        response.setText("good-get");
-
-        response.setHttpExchange(httpExchange);
-
-        httpExchange.getResponseHeaders().set("Content-Type", "appication/json");
-        httpExchange.getResponseHeaders().set("Access-Control-Allow-Credentials", "true");
-        httpExchange.getResponseHeaders().set("Access-Control-Allow-Origin", "http://localhost:3000");
-        httpExchange.getResponseHeaders().set("Access-Control-Expose-Headers", "Set-Cookie");
-        httpExchange.getResponseHeaders().set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
-        httpExchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Expose-Headers, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Methods, Authorization");
-
-        httpExchange.sendResponseHeaders(response.getStatusCode(), response.getData().toString().length());
-
-        OutputStream os = httpExchange.getResponseBody();
-
-        os.write(response.getData().toString().getBytes());
-
-        os.close();
-
-        daoProduct.close();
+        catch (Exception e){
+            System.out.println(e);
+        }
 
     }
 }
