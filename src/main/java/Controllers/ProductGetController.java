@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpExchange;
 import dto.Product;
 import dto.Response;
 import utils.HttpUtil;
+import utils.MyCipher;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +18,7 @@ import java.util.Map;
 
 public class ProductGetController {
 
-    public static void getProductById(HttpExchange httpExchange) throws IOException {
+    public static void getProductById(HttpExchange httpExchange) throws Exception {
 
         DaoProduct daoProduct = new DaoProduct("storedb");
 
@@ -30,6 +31,10 @@ public class ProductGetController {
         JsonObject product_json = new JsonObject();
 
         int productId = Integer.parseInt(idStr);
+
+        System.out.println(MyCipher.encrypt("Kak"));
+
+        System.out.println(MyCipher.desEncrypt(MyCipher.encrypt("Kak")));
 
         Response response = new Response();
 
