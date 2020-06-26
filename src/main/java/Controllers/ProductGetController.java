@@ -33,8 +33,8 @@ public class ProductGetController {
         int productId = Integer.parseInt(idStr);
 
         try {
-            System.out.println(MyCipher.encrypt("Kak"));
-            System.out.println(MyCipher.desEncrypt(MyCipher.encrypt("Kak")));
+
+
 
 
             Response response = new Response();
@@ -44,7 +44,7 @@ public class ProductGetController {
                 String data = "Conflict";
 
                 response.setStatusCode(409);
-                response.setData(data);
+                response.setData(MyCipher.encrypt(data));
 
             } else {
 
@@ -56,7 +56,7 @@ public class ProductGetController {
 
                     response.setStatusCode(404);
 
-                    response.setData(data);
+                    response.setData(MyCipher.encrypt(data));
 
                 } else {
 
@@ -79,7 +79,7 @@ public class ProductGetController {
                     product_json.addProperty("product_group_name", product.getGroup_name());
 
 
-                    response.setData(product_json);
+                    response.setData(MyCipher.encrypt(product_json.toString()));
 
                     System.out.println(product_json.toString());
 

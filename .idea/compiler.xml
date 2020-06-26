@@ -8,9 +8,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="task-2-HW-master" />
-        <module name="Task-5" />
-        <module name="task-2-HW" />
         <module name="Task_2_HW" />
+        <module name="task-2-HW" />
+        <module name="Task-5" />
         <module name="Task-4" />
       </profile>
     </annotationProcessing>

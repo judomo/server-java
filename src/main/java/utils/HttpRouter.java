@@ -102,6 +102,8 @@ public class HttpRouter {
             }
 
             return new Success(ANONYMOUS_USER);
+
+            //return new Failure(403);
         }
     }
 }
