@@ -21,7 +21,7 @@ import dto.Response;
 public class ProductPutController {
 
 
-    public static void create(HttpExchange httpExchange) throws IOException {
+    public static void create(HttpExchange httpExchange) {
 
         DaoProduct daoProduct = new DaoProduct("storedb");
 

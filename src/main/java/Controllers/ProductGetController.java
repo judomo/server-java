@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class ProductGetController {
 
-    public static void getProductById(HttpExchange httpExchange) throws Exception {
+    public static void getProductById(HttpExchange httpExchange) {
 
         DaoProduct daoProduct = new DaoProduct("storedb");
 
@@ -32,9 +32,13 @@ public class ProductGetController {
 
         int productId = Integer.parseInt(idStr);
 
-        System.out.println(MyCipher.encrypt("Kak"));
+        try {
+            System.out.println(MyCipher.encrypt("Kak"));
+            System.out.println(MyCipher.desEncrypt(MyCipher.encrypt("Kak")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        System.out.println(MyCipher.desEncrypt(MyCipher.encrypt("Kak")));
 
         Response response = new Response();
 
