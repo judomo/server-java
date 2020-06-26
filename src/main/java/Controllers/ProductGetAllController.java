@@ -85,7 +85,7 @@ public class ProductGetAllController{
         httpExchange.getResponseHeaders().set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
         httpExchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Expose-Headers, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Methods, Authorization");
 
-        httpExchange.sendResponseHeaders(response.getStatusCode(), response.getData().toString().length());
+        httpExchange.sendResponseHeaders(response.getStatusCode(), response.getData().toString().length()+12);
 
         OutputStream os = httpExchange.getResponseBody();
 
